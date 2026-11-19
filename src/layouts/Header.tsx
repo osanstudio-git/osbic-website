@@ -36,22 +36,22 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-40 bg-white shadow-sm border-b border-blue-100">
-        <nav className="container mx-auto px-5 py-10 flex justify-between items-center font-sans font-light tracking-wide">
+      <header className="fixed top-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100/80 transition-all duration-200">
+        <nav className="container mx-auto px-5 py-3 sm:py-3.5 flex justify-between items-center font-sans">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <span className="text-3xl font-light tracking-wide text-[#42A5E1]">OSBIC</span>
+            <span className="text-2xl sm:text-[26px] font-semibold tracking-wider text-[#42A5E1]">OSBIC</span>
           </Link>
 
           {/* Desktop Nav Links */}
-          <div className="hidden lg:flex flex-1 justify-center items-center gap-8">
-            <Link to="/" className={`text-gray-800 text-lg font-light hover:text-[#42A5E1] transition ${alignment}`}>
+          <div className="hidden lg:flex flex-1 justify-center items-center gap-7">
+            <Link to="/" className={`text-gray-700 text-[15px] font-medium hover:text-[#42A5E1] transition ${alignment}`}>
               {t("nav.home")}
             </Link>
-            <Link to="/about" className={`text-gray-800 text-lg font-light hover:text-[#42A5E1] transition ${alignment}`}>
+            <Link to="/about" className={`text-gray-700 text-[15px] font-medium hover:text-[#42A5E1] transition ${alignment}`}>
               {t("nav.about")}
             </Link>
-            <Link to="/services" className={`text-gray-800 text-lg font-light hover:text-[#42A5E1] transition ${alignment}`}>
+            <Link to="/services" className={`text-gray-700 text-[15px] font-medium hover:text-[#42A5E1] transition ${alignment}`}>
               {t("nav.services")}
             </Link>
 
@@ -62,8 +62,8 @@ export default function Header() {
               onMouseEnter={() => setBusinessSetupOpen(true)}
               onMouseLeave={() => setBusinessSetupOpen(false)}
             >
-              <button className={`text-gray-800 text-[17px] font-medium hover:text-[#42A5E1] transition flex items-center gap-1 ${alignment}`}>
-                {t("nav.businessSetup")} <ChevronDown size={18} />
+              <button className={`text-gray-700 text-[15px] font-medium hover:text-[#42A5E1] transition flex items-center gap-1 ${alignment}`}>
+                {t("nav.businessSetup")} <ChevronDown size={15} />
               </button>
               <div
                 className={`absolute top-full mt-2 bg-white rounded-xl shadow-xl border border-gray-100 transition-all duration-200
@@ -85,7 +85,7 @@ export default function Header() {
                     <Link
                       key={item.to}
                       to={item.to}
-                      className="block px-5 py-2 text-gray-700 text-[16px] font-light hover:bg-blue-50 hover:text-[#42A5E1] transition"
+                      className="block px-5 py-2 text-gray-700 text-[14px] font-normal hover:bg-blue-50 hover:text-[#42A5E1] transition"
                     >
                       {item.label}
                     </Link>
@@ -94,29 +94,29 @@ export default function Header() {
               </div>
             </div>
 
-            <Link to="/contact" className={`text-gray-800 text-lg font-light hover:text-[#42A5E1] transition ${alignment}`}>
+            <Link to="/contact" className={`text-gray-700 text-[15px] font-medium hover:text-[#42A5E1] transition ${alignment}`}>
               {t("nav.contact")}
             </Link>
           </div>
 
           {/* Right Controls */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2.5">
             {/* Language Switcher */}
             <div className="relative">
               <button
                 onClick={() => setLanguageOpen(!languageOpen)}
-                className="flex items-center gap-2 border border-gray-200 px-3 py-2 rounded-lg text-gray-800 font-semibold text-[15px] hover:bg-blue-50 transition"
+                className="flex items-center gap-1.5 border border-gray-200 px-2.5 py-1.5 rounded-lg text-gray-700 font-medium text-xs sm:text-sm hover:bg-blue-50 hover:border-[#42A5E1]/40 transition"
               >
-                <span className="text-[#42A5E1] uppercase">{i18n.language}</span>
-                <ChevronDown size={16} />
+                <span className="text-[#42A5E1] font-semibold uppercase">{i18n.language}</span>
+                <ChevronDown size={14} />
               </button>
               {languageOpen && (
-                <div className="absolute top-full right-0 mt-2 bg-white border border-gray-100 rounded-lg shadow-lg py-2 min-w-[120px] z-50">
+                <div className="absolute top-full right-0 mt-2 bg-white border border-gray-100 rounded-lg shadow-lg py-1.5 min-w-[120px] z-50">
                   {["en", "ar", "fa"].map(lang => (
                     <button
                       key={lang}
                       onClick={() => changeLanguage(lang)}
-                      className={`block w-full text-left px-4 py-2 text-[15px] ${
+                      className={`block w-full text-left px-3.5 py-1.5 text-xs sm:text-sm ${
                         i18n.language === lang ? "bg-blue-50 text-[#42A5E1] font-semibold" : "hover:bg-blue-50 hover:text-[#42A5E1]"
                       }`}
                     >
@@ -131,7 +131,7 @@ export default function Header() {
             <div className="hidden lg:block">
               <button
                 onClick={() => setIsCalculatorOpen(true)}
-                className="bg-[#42A5E1] hover:bg-[#1e88e5] text-white px-6 py-2.5 rounded-lg font-semibold text-[15px] shadow-md transition"
+                className="bg-[#42A5E1] hover:bg-[#1e88e5] text-white px-5 py-2 rounded-lg font-medium text-sm shadow-sm hover:shadow transition-all duration-200"
               >
                 {t("nav.GetInstantQuote")}
               </button>

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
-import { FileCheck, Rocket, CheckCircle, MessageSquare } from "lucide-react";
+import { FileCheck, Rocket, CheckCircle, MessageSquare, ArrowRight } from "lucide-react";
 import { Building2, FileText, Users, Globe } from 'lucide-react';
 import ContinuousScrollingLogos from '../components/ContinuousScrollingLogos';
 import Chatbot from '../components/Chatbot';
@@ -128,44 +128,66 @@ export default function Home1() {
   return (
     <div>
       {/* === HERO SECTION === */}
-      <section
-        className="relative min-h-screen flex flex-col text-white overflow-hidden"
-        style={{
-          backgroundImage: "url('/images/hero-bg.webp')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="absolute inset-0 bg-[#0a192f]/70"></div>
-        <div className="relative z-10 flex flex-col flex-1 justify-center px-6 container mx-auto">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="
-  max-w-3xl 
-  text-left rtl:text-right
-  mt-28 md:mt-32 lg:mt-28
-  text-center md:text-left rtl:md:text-right
-"
+      <section className="relative min-h-screen flex flex-col text-white overflow-hidden">
+        {/* Background Video with Image Poster Fallback */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          poster="/images/hero-bg.webp"
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/videos/hero.mp4" type="video/mp4" />
+        </video>
 
+        {/* Balanced Overlay: Video is vibrant & clearly visible, text is 100% readable */}
+        <div className="absolute inset-0 bg-[#0a192f]/40 bg-gradient-to-t from-[#0a192f]/80 via-transparent to-[#0a192f]/50"></div>
+        <div className="absolute inset-0 bg-black/20"></div>
+
+        <div className="relative z-10 flex flex-col flex-1 justify-center items-center px-4 sm:px-6 container mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: "easeOut" }}
+            className="max-w-4xl mx-auto flex flex-col items-center mt-20 sm:mt-24 md:mt-20"
           >
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
+            {/* Trust & Advisory Pill Badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-xs sm:text-sm font-medium mb-6 shadow-lg shadow-black/20"
+            >
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#42A5E1] opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-[#42A5E1]"></span>
+              </span>
+              <span className="tracking-wide">OSBIC International</span>
+            </motion.div>
+
+            {/* Main Title - Centered & Bold */}
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-[1.15] mb-6 tracking-tight uppercase drop-shadow-[0_4px_24px_rgba(0,0,0,0.95)]">
               {t("home.hero.title")}
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-gray-200 max-w-2xl mb-8">
+
+            {/* Subtitle - Crisp with Depth */}
+            <p className="text-base sm:text-xl md:text-2xl text-gray-100 max-w-2xl sm:max-w-3xl mb-10 font-normal leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.9)]">
               {t("home.hero.subtitle")}
             </p>
-            <div className="flex flex-col sm:flex-row sm:justify-center md:justify-start gap-4 mb-10">
+
+            {/* Centered CTA Buttons with Glass & Gradient Effects */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-5 mb-12 w-full sm:w-auto">
               <Link
                 to="/contact"
-                className="w-full sm:w-auto bg-[#42A5E1] hover:bg-[#1e81c6] text-white px-8 py-4 rounded-lg font-medium transition text-center text-base sm:text-lg"
+                className="w-full sm:w-auto bg-[#42A5E1] hover:bg-[#2084c8] text-white px-8 sm:px-10 py-4 rounded-xl font-semibold shadow-xl shadow-[#42A5E1]/30 hover:shadow-[#42A5E1]/50 hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 text-center text-base sm:text-lg flex items-center justify-center gap-2"
               >
-                {t("home.hero.ctaBook")}
+                <span>{t("home.hero.ctaBook")}</span>
+                <ArrowRight size={20} className="rtl:rotate-180" />
               </Link>
               <Link
                 to="/services"
-                className="w-full sm:w-auto border border-white/40 text-white px-8 py-4 rounded-lg font-medium hover:bg-white/10 transition text-center text-base sm:text-lg"
+                className="w-full sm:w-auto bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/30 text-white px-8 sm:px-10 py-4 rounded-xl font-semibold shadow-lg hover:scale-[1.03] active:scale-[0.98] transition-all duration-300 text-center text-base sm:text-lg"
               >
                 {t("home.hero.ctaServices")}
               </Link>
@@ -173,15 +195,15 @@ export default function Home1() {
           </motion.div>
         </div>
 
-        {/* ===== COUNTER SECTION ===== */}
-        <div ref={statsRef} className="bg-white py-4 sm:py-6 relative z-10">
-          <div className="grid grid-cols-3 gap-4 sm:gap-8 text-center max-w-5xl mx-auto text-gray-800">
+        {/* ===== COUNTER SECTION (COMPACT & MODERN) ===== */}
+        <div ref={statsRef} className="bg-white/95 backdrop-blur-md border-t border-gray-100 py-3 sm:py-3.5 relative z-10 shadow-sm">
+          <div className="grid grid-cols-3 divide-x divide-gray-200/70 max-w-4xl mx-auto text-center text-gray-800 px-4">
             {counterStats.map((s, i) => (
-              <div key={i}>
-                <div className="text-xl sm:text-3xl font-semibold mb-1 text-[#42A5E1]">
+              <div key={i} className="px-2 sm:px-6">
+                <div className="text-xl sm:text-3xl font-extrabold text-[#42A5E1] tracking-tight leading-none mb-1">
                   <span className="stat-number" data-target={s.target}>0</span>{s.suffix}
                 </div>
-                <div className="text-gray-600 text-xs sm:text-sm">{s.label}</div>
+                <div className="text-gray-500 text-[11px] sm:text-xs font-medium uppercase tracking-wider">{s.label}</div>
               </div>
             ))}
           </div>
