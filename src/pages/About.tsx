@@ -291,9 +291,9 @@ export default function About() {
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            src="/images/office.2.webp"
+            src="/images/about-osbic.webp"
             alt={t("about.story.officeAlt")}
-            className="rounded-2xl shadow-xl object-cover"
+            className="rounded-2xl shadow-xl object-cover w-full h-auto"
           />
 
           <motion.div
