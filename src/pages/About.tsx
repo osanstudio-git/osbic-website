@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
-import { Users } from "lucide-react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Users, ChevronLeft, ChevronRight } from "lucide-react";
 import "../globals.css";
 import { useTranslation, Trans } from "react-i18next";
 
@@ -265,6 +266,35 @@ export default function About() {
       backKey: "about.cards.values.text",
     },
   ];
+
+  const teamPhotos = [
+    "/images/TEAM/TeamPhoto.webp",
+    "/images/TEAM/TM-1.webp",
+    "/images/TEAM/TM-2.webp",
+    "/images/TEAM/TM-3.webp",
+    "/images/TEAM/TM-4.webp",
+    "/images/TEAM/TM-5.webp",
+    "/images/TEAM/TM-6.webp",
+  ];
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    if (isPaused) return;
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % teamPhotos.length);
+    }, 4500);
+    return () => clearInterval(interval);
+  }, [isPaused, teamPhotos.length]);
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % teamPhotos.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + teamPhotos.length) % teamPhotos.length);
+  };
 
   return (
     <div className="min-h-screen pt-28">
@@ -606,7 +636,7 @@ export default function About() {
 </section> */}
 
 
-      {/* Group Photo */}
+      {/* Group Photos - Meet the Team Slider */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6 text-center">
           <motion.h2
@@ -614,34 +644,63 @@ export default function About() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-4xl font-light text-[#1a2332] mb-6"
+            className="text-4xl font-light text-[#1a2332] mb-10"
           >
             {t("about.group.heading")}
           </motion.h2>
 
-          {/* <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            viewport={{ once: true }}
-            className="text-gray-600 mb-10 max-w-2xl mx-auto"
+          {/* Slider Container */}
+          <div
+            className="max-w-4xl lg:max-w-5xl mx-auto relative group"
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
           >
-            {t("about.group.sub")}
-          </motion.p> */}
+            {/* Main Showcase Image */}
+            <div className="relative rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl bg-gray-900 aspect-[16/10] sm:aspect-[16/9]">
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={currentSlide}
+                  src={teamPhotos[currentSlide]}
+                  alt={`${t("about.group.imageAlt")} ${currentSlide + 1}`}
+                  initial={{ opacity: 0, scale: 1.02 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.5, ease: "easeInOut" }}
+                  className="w-full h-full object-cover"
+                />
+              </AnimatePresence>
 
-          <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-            className="rounded-2xl overflow-hidden shadow-2xl max-w-4xl mx-auto"
-          >
-            <img
-              src="/images/TEAM/TeamPhoto.webp"
-              alt={t("about.group.imageAlt")}
-              className="w-full object-cover"
-            />
-          </motion.div>
+              {/* Navigation Arrows */}
+              <button
+                onClick={prevSlide}
+                aria-label="Previous Team Photo"
+                className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/80 hover:bg-white text-gray-800 shadow-xl flex items-center justify-center transition-all duration-200 backdrop-blur-md opacity-80 group-hover:opacity-100 hover:scale-110 z-20"
+              >
+                <ChevronLeft size={24} className="rtl:rotate-180" />
+              </button>
+              <button
+                onClick={nextSlide}
+                aria-label="Next Team Photo"
+                className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/80 hover:bg-white text-gray-800 shadow-xl flex items-center justify-center transition-all duration-200 backdrop-blur-md opacity-80 group-hover:opacity-100 hover:scale-110 z-20"
+              >
+                <ChevronRight size={24} className="rtl:rotate-180" />
+              </button>
+            </div>
+
+            {/* Dots Indicator */}
+            <div className="flex justify-center items-center gap-2 mt-6">
+              {teamPhotos.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentSlide(idx)}
+                  className={`h-2.5 rounded-full transition-all duration-300 ${
+                    currentSlide === idx ? "w-8 bg-[#42A5E1]" : "w-2.5 bg-gray-300 hover:bg-gray-400"
+                  }`}
+                  aria-label={`Slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
